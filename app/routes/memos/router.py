@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, HTTPException
 
-from app.schemas import MemoCreate, MemoResponse
+from app.schemas import MemoCreate, MemoResponse, MemoSummaryResponse
 
 memos = [
   {
@@ -94,4 +94,23 @@ def delete_memo(memo_id: int):
     raise HTTPException(
         status_code = status.HTTP_404_NOT_FOUND,
         detail = "Memo not found"
+    )
+
+@router.post(
+    "/{memo_id}/summarize",
+    response_model=MemoSummaryResponse,
+)
+def summarize_memo(memo_id: int):
+    for memo in memos:
+        if memo["id"] == memo_id:
+            summary = f"{memo['title']}에 대한 요약입니다."
+
+            return {
+                "memo_id": memo["id"],
+                "summary": summary,
+            }
+
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail="Memo not found",
     )

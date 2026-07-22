@@ -8,3 +8,7 @@ class MemoResponse(BaseModel):
     id: int
     title: str
     content: str
+
+class MemoSummaryResponse(BaseModel):
+    id: int
+    summary: str

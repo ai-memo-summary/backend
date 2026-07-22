@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 
+from app.routes.memos.router import router as memos_router
+
 app = FastAPI()
 
-@app.get("/")
-def read_root():
-    return {"message": "AI memo summary API"}
+app.include_router(memos_router)
+
